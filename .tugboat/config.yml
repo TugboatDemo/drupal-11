@@ -75,6 +75,10 @@ services:
         # have been updated by module updates or patches in this branch.
         - composer install --optimize-autoloader
 
+        # Install Drupal from the exported config if it hasn't been installed
+        # yet. Subsequent builds skip this since the site is already installed.
+        - vendor/bin/drush status --field=bootstrap | grep -q Successful || vendor/bin/drush site-install --existing-config --yes
+
         # Run any pending database updates and import configuration.
         - vendor/bin/drush deploy --yes
 
