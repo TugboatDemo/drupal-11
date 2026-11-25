@@ -24,6 +24,15 @@ services:
         - docker-php-ext-install opcache
         - a2enmod headers rewrite
 
+        # Block the Drupal installer at the web server (SA-CORE-2026-019).
+        # Composer's post-install/post-update scripts also delete
+        # core/install.php; this keeps it blocked if the file ever returns.
+        # This must be server config: the same rule in .htaccess causes a 500.
+        # https://www.drupal.org/docs/administering-a-drupal-site/security-in-drupal/securing-the-installer-installphp
+        - printf '<Location "/core/install.php">\n  Require all denied\n</Location>\n' > /etc/apache2/conf-available/block-install.conf
+        - a2enconf block-install
+        - apachectl configtest
+
         # Link the document root to the expected path. This example links /web
         # to the docroot (standard for composer-based Drupal projects).
         - ln -snf "${TUGBOAT_ROOT}/web" "${DOCROOT}"

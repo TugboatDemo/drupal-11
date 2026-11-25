@@ -25,6 +25,14 @@
     "conflict": {
         "drupal/drupal": "*"
     },
+    "scripts": {
+        "post-install-cmd": [
+            "rm -f web/core/install.php"
+        ],
+        "post-update-cmd": [
+            "rm -f web/core/install.php"
+        ]
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -39,7 +47,10 @@
             "php-tuf/composer-integration": true,
             "symfony/runtime": true
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.3.0"
+        }
     },
     "extra": {
         "drupal-scaffold": {
