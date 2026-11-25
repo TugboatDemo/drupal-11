@@ -4,8 +4,9 @@
 services:
   # Define the webserver service.
   webserver:
-    # Drupal 11 requires PHP 8.3 as the minimum version.
-    image: tugboatqa/php:8.3-apache
+    # Drupal 11 requires PHP 8.3 and recommends 8.4. Keep this in sync with
+    # php_version in .ddev/config.yaml and config.platform.php in composer.json.
+    image: tugboatqa/php:8.4-apache
 
     # Set this as the default service. This does a few things
     #   1. Clones the git repository into the service container
