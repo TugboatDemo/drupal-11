@@ -38,3 +38,7 @@ web/themes/contrib
 web/*.php
 
 auth.json
+# Drupal writes this into the config sync directory on install/export. The
+# directory is outside the docroot, and tracking it makes checkouts fail on
+# Tugboat previews where Drupal already created it.
+/config/.htaccess
